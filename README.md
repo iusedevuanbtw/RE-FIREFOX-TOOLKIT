@@ -1,6 +1,5 @@
-```markdown
 # RE Toolkit
-
+     git clone https://github.com/iusedevuanbtw/RE-FIREFOX-TOOLKIT/   
 Browser extension for reverse engineering web applications. Captures network requests, records user interactions, generates automation scripts.
 
 ## Installation
@@ -103,13 +102,13 @@ reverse-engineering-toolkit/
 
 ## Permissions
 
-- `webRequest` / `webRequestBlocking` — intercept HTTP requests
-- `storage` / `unlimitedStorage` — persist captured data
-- `clipboardWrite` — copy generated scripts
-- `activeTab` / `tabs` — access current page
-- `downloads` — export HAR files
-- `webNavigation` — track navigation events
-- `cookies` — capture authentication tokens
+- webRequest` / `webRequestBlocking` — intercept HTTP requests
+- storage` / `unlimitedStorage` — persist captured data
+- clipboardWrite` — copy generated scripts
+- activeTab` / `tabs` — access current page
+- downloads` — export HAR files
+- webNavigation` — track navigation events
+- cookies` — capture authentication tokens
 
 ## Building from source
 
