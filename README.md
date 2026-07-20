@@ -1,124 +1,42 @@
 # RE Toolkit
-     git clone https://github.com/iusedevuanbtw/RE-FIREFOX-TOOLKIT/   
-Browser extension for reverse engineering web applications. Captures network requests, records user interactions, generates automation scripts.
 
-## Installation
-
-1. Clone or download this repository
-2. Open Firefox and navigate to `about:debugging`
-3. Click "This Firefox" → "Load Temporary Add-on"
-4. Select `manifest.json` from the extension directory
+Minimalist reverse engineering and web automation toolkit for Firefox.  
+Captures DOM interactions, network traffic, and responses in real-time, providing immediate export to cURL, HAR, or Playwright scripts.
 
 ## Features
 
-### Recorder
-Records all user interactions on the page with millisecond timestamps:
-- Clicks with CSS selectors and coordinates
-- Text input with values
-- Form submissions with field data
-- XHR and Fetch requests
-- WebSocket connections and messages
-- Navigation events (pushState, popstate, hashchange)
-- Script loads and DOM mutations
+- **rec**: Records DOM interactions (clicks, inputs, scrolls, keydowns, SPA navigation, dynamic script/iframe injection) with smart CSS selector generation.
+- **api**: Captures full HTTP requests (headers, bodies) and **intercepts responses** (Fetch/XHR/SSE/WebSocket), revealing the complete client-server dialog.
+- **curl**: One-click export of all captured requests into a ready-to-run bash replay script.
+- **dec**: Recursive decoder. Automatically unwraps nested encoding layers (URL → JSON → HTML entities → Base64) and auto-detects/decodes JWTs with expiration analysis.
+- **map**: Builds a collapsed endpoint tree (host → method + path), normalizing UUIDs and numbers into `:uuid`/`:num` for instant API surface mapping.
+- **har**: Exports captured traffic to HAR 1.2 format for seamless import into Burp Suite, mitmproxy, or Chrome DevTools.
+- **pw**: Generates ready-to-use Playwright (Python) automation scripts based on recorded DOM interactions.
 
-### API Capture
-Intercepts all HTTP requests made by the page:
-- Request method, URL, status code
-- Request and response headers
-- Request body with gzip/deflate/brotli decoding
-- Filter by URL pattern
-- Export as HAR (HTTP Archive) format
-- Toggle request blocking (intercept mode)
+## Installation (Local / Dev)
 
-### Playwright Generator
-Generates Python scripts for browser automation:
-- Scans page for interactive elements
-- Builds CSS selectors (id, name, aria-label, data-testid)
-- Creates async Playwright script with clicks and text input
-- One-click copy to clipboard
+1. Clone or download this repository.
+2. Open Firefox and navigate to `about:debugging#/runtime/this-firefox`.
+3. Click **Load Temporary Add-on…**.
+4. Select the `manifest.json` file from this directory.
+5. The extension icon will appear in your toolbar. Click it to open the popup.
 
-### WebSocket Monitor
-Captures WebSocket traffic:
-- Connection URLs
-- Sent and received messages
-- Payload inspection
+*Note: This is a Manifest V2 extension optimized for local development and security research. It requires Firefox.*
 
-## Usage
+## Usage Workflow
 
-### Recording a session
-1. Open the target website
-2. Click extension icon → **rec** tab
-3. Press **rec** button
-4. Interact with the page (clicks, typing, navigation)
-5. Press **stop** to finish recording
-6. View timeline with all actions and timestamps
-7. Export as JSON or generate Playwright script
+1. Open the target web application.
+2. Open RE Toolkit popup and click **rec** to start recording.
+3. Perform the actions you want to analyze (login, API calls, navigation).
+4. Click **stop**.
+5. Switch to the **api** tab and click **capture** to view requests/responses, or **curl** to get a replay script.
+6. Use **dec** to decode any obfuscated tokens or payloads.
+7. Use **map** to visualize the discovered API endpoints.
 
-### Capturing API requests
-1. Open the target website
-2. Click extension icon → **api** tab
-3. Press **capture** to view intercepted requests
-4. Use filter to find specific endpoints
-5. Toggle **intercept** to enable live logging in DevTools
-6. Export as HAR for analysis in other tools
+## Disclaimer
 
-### Generating automation
-1. Navigate to the page you want to automate
-2. Click extension icon → **pw** tab
-3. Press **generate**
-4. Copy the Python script
-5. Install dependencies: `pip install playwright && playwright install chromium`
-6. Run the script
+This tool is designed for educational purposes, authorized security research, bug bounty hunting, and reverse engineering of your own applications. Do not use this tool against systems you do not have explicit permission to test.
 
-### Extracting HAR
-1. Click extension icon → **har** tab
-2. Press **export har** to download
-3. Open in Chrome DevTools Network tab or any HAR viewer
+## License
 
-## Configuration
-
-Create `config/auth.json`:
-```json
-{
-    "token": "Bearer token from captured requests",
-    "cookie": "ds_session_id=...",
-    "chat_session_id": "from URL"
-}
-```
-
-## Files
-
-```
-reverse-engineering-toolkit/
-├── manifest.json          Extension manifest (Firefox)
-├── background.js          Background service worker
-├── popup.html             Extension popup UI
-├── popup.js               Popup logic
-├── devtools.html          DevTools panel
-├── devtools.js            DevTools panel logic
-└── config/
-    └── auth.example.json  Configuration template
-```
-
-## Permissions
-
-- webRequest` / `webRequestBlocking` — intercept HTTP requests
-- storage` / `unlimitedStorage` — persist captured data
-- clipboardWrite` — copy generated scripts
-- activeTab` / `tabs` — access current page
-- downloads` — export HAR files
-- webNavigation` — track navigation events
-- cookies` — capture authentication tokens
-
-## Building from source
-
-No build step required. The extension uses vanilla JavaScript and runs directly in Firefox.
-
-For the C++ client (DeepSeek API integration), see the separate build script.
-
-## Limitations
-
-- Firefox only (Manifest V2)
-- Request body capture limited to 5KB per request
-- HAR entries capped at 1000
-- WebSocket capture requires page refresh after enabling
+MIT License. See [LICENSE](LICENSE) for details.
