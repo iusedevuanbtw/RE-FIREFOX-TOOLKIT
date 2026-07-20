@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#0a0a0a;--bg2:#121212;--bg3:#1c1c1c;--border:#252525;--border2:#333;
+--text:#b0b0b0;--text2:#666;--text3:#444;--grn:#0f0;--grn2:#0a0;
+--red:#f22;--red2:#c00;--blu:#08f;--blu2:#06c;--amb:#f80
+}
+body{
+width:600px;height:440px;background:var(--bg);color:var(--text);
+font:12px/1.45 'SF Mono','Fira Code','JetBrains Mono','Consolas',monospace;
+overflow:hidden;letter-spacing:-0.2px
+}
+.app{height:100%;display:flex;flex-direction:column}
+.bar{display:flex;border-bottom:1px solid var(--border);background:var(--bg2);user-select:none}
+.t{padding:8px 16px;color:var(--text2);cursor:pointer;font-size:10px;font-weight:600;
+text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid transparent}
+.t:hover{color:var(--text)}
+.t.on{color:var(--grn);border-bottom-color:var(--grn)}
+.tb{display:flex;gap:4px;padding:8px;background:var(--bg2);border-bottom:1px solid var(--border)}
+.btn{padding:5px 10px;border:1px solid var(--border2);background:var(--bg3);color:var(--text);
+cursor:pointer;font:10px/1 'SF Mono','Fira Code','JetBrains Mono','Consolas',monospace;
+font-weight:600;transition:all .1s;border-radius:2px;white-space:nowrap;text-transform:lowercase}
+.btn:hover{background:var(--bg2);border-color:var(--text3)}
+.btn-rec{background:var(--red);border-color:var(--red);color:#fff}
+.btn-rec:hover{background:var(--red2)}
+.btn-rec.on{animation:p 1s infinite}
+@keyframes p{0%,100%{box-shadow:0 0 0 0 rgba(255,34,34,.5)}50%{box-shadow:0 0 0 5px rgba(255,34,34,0)}}
+.btn-g{background:var(--grn);border-color:var(--grn);color:#000}
+.btn-g:hover{background:var(--grn2)}
+.btn-b{background:var(--blu);border-color:var(--blu);color:#000}
+.btn-b:hover{background:var(--blu2)}
+.btn-a{background:var(--amb);border-color:var(--amb);color:#000}
+.btn-o{background:transparent;border-color:transparent;color:var(--text2)}
+.btn-o:hover{background:var(--bg3);color:var(--text)}
+.out{flex:1;position:relative}
+.ta{width:100%;height:100%;background:var(--bg);color:var(--text);border:none;
+padding:10px;font:11px/1.5 'SF Mono','Fira Code','JetBrains Mono','Consolas',monospace;
+resize:none;outline:none;tab-size:2}
+.ta::selection{background:var(--grn);color:#000}
+.st{padding:5px 10px;background:var(--bg2);border-top:1px solid var(--border);
+font-size:10px;color:var(--text2);display:flex;justify-content:space-between;align-items:center}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--text3);display:inline-block;margin-right:5px}
+.dot.on{background:var(--grn)}
+.dot.rec{background:var(--red);animation:p 1s infinite}
+.h{display:none!important}
+.g{flex:1}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="bar">
+<div class="t on" data-p="rec">rec</div>
+<div class="t" data-p="api">api</div>
+<div class="t" data-p="pw">pw</div>
+</div>
+<div class="tb" data-p="rec">
+<button class="btn btn-rec" id="recBtn">rec</button>
+<button class="btn btn-o" id="recClr">clear</button>
+<div class="g"></div>
+<button class="btn btn-g" id="recExp">export</button>
+</div>
+<div class="tb h" data-p="api">
+<button class="btn btn-b" id="apiCap">capture</button>
+<button class="btn btn-o" id="apiClr">clear</button>
+<div class="g"></div>
+<button class="btn btn-a" id="apiCpy">copy</button>
+</div>
+<div class="tb h" data-p="pw">
+<button class="btn btn-g" id="pwGen">generate</button>
+<button class="btn btn-o" id="pwClr">clear</button>
+<div class="g"></div>
+<button class="btn btn-a" id="pwCpy">copy</button>
+</div>
+<div class="out">
+<textarea class="ta" id="ta" placeholder="// ready" readonly spellcheck="false"></textarea>
+</div>
+<div class="st">
+<span><span class="dot" id="dot"></span><span id="status">idle</span></span>
+<span id="info"></span>
+</div>
+</div>
+<script src="popup.js"></script>
+</body>
+</html>
