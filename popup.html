@@ -1,88 +1,187 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
+<title>RE Toolkit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
---bg:#0a0a0a;--bg2:#121212;--bg3:#1c1c1c;--border:#252525;--border2:#333;
---text:#b0b0b0;--text2:#666;--text3:#444;--grn:#0f0;--grn2:#0a0;
---red:#f22;--red2:#c00;--blu:#08f;--blu2:#06c;--amb:#f80
+--bg:#101014;
+--sf:#18181f;
+--well:#0b0b0f;
+--bd:#26262e;
+--bd2:#3a3a46;
+--tx:#9ca0b0;
+--txb:#d4d7e5;
+--dim:#4a4e5e;
+--acc:#c8a84b;
+--red:#c4564a;
+--grn:#5f8a5e;
+--mono:'JetBrains Mono',ui-monospace,'Cascadia Mono',Consolas,monospace;
 }
+html,body{height:100%}
 body{
-width:600px;height:440px;background:var(--bg);color:var(--text);
-font:12px/1.45 'SF Mono','Fira Code','JetBrains Mono','Consolas',monospace;
-overflow:hidden;letter-spacing:-0.2px
+width:440px;height:560px;
+display:flex;flex-direction:column;
+font-family:var(--mono);
+font-variant-ligatures:none;
+background:var(--bg);
+color:var(--tx);
+overflow:hidden;
 }
-.app{height:100%;display:flex;flex-direction:column}
-.bar{display:flex;border-bottom:1px solid var(--border);background:var(--bg2);user-select:none}
-.t{padding:8px 16px;color:var(--text2);cursor:pointer;font-size:10px;font-weight:600;
-text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid transparent}
-.t:hover{color:var(--text)}
-.t.on{color:var(--grn);border-bottom-color:var(--grn)}
-.tb{display:flex;gap:4px;padding:8px;background:var(--bg2);border-bottom:1px solid var(--border)}
-.btn{padding:5px 10px;border:1px solid var(--border2);background:var(--bg3);color:var(--text);
-cursor:pointer;font:10px/1 'SF Mono','Fira Code','JetBrains Mono','Consolas',monospace;
-font-weight:600;transition:all .1s;border-radius:2px;white-space:nowrap;text-transform:lowercase}
-.btn:hover{background:var(--bg2);border-color:var(--text3)}
-.btn-rec{background:var(--red);border-color:var(--red);color:#fff}
-.btn-rec:hover{background:var(--red2)}
-.btn-rec.on{animation:p 1s infinite}
-@keyframes p{0%,100%{box-shadow:0 0 0 0 rgba(255,34,34,.5)}50%{box-shadow:0 0 0 5px rgba(255,34,34,0)}}
-.btn-g{background:var(--grn);border-color:var(--grn);color:#000}
-.btn-g:hover{background:var(--grn2)}
-.btn-b{background:var(--blu);border-color:var(--blu);color:#000}
-.btn-b:hover{background:var(--blu2)}
-.btn-a{background:var(--amb);border-color:var(--amb);color:#000}
-.btn-o{background:transparent;border-color:transparent;color:var(--text2)}
-.btn-o:hover{background:var(--bg3);color:var(--text)}
-.out{flex:1;position:relative}
-.ta{width:100%;height:100%;background:var(--bg);color:var(--text);border:none;
-padding:10px;font:11px/1.5 'SF Mono','Fira Code','JetBrains Mono','Consolas',monospace;
-resize:none;outline:none;tab-size:2}
-.ta::selection{background:var(--grn);color:#000}
-.st{padding:5px 10px;background:var(--bg2);border-top:1px solid var(--border);
-font-size:10px;color:var(--text2);display:flex;justify-content:space-between;align-items:center}
-.dot{width:5px;height:5px;border-radius:50%;background:var(--text3);display:inline-block;margin-right:5px}
+.hd{
+display:flex;align-items:baseline;gap:8px;
+padding:10px 12px 8px;
+border-bottom:1px solid var(--bd);
+}
+.brand{font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--txb)}
+.ver{font-size:9px;color:var(--dim);letter-spacing:.05em}
+.tabs{
+display:flex;
+border-bottom:1px solid var(--bd);
+background:var(--sf);
+}
+.t{
+flex:1;appearance:none;background:none;border:0;
+border-bottom:2px solid transparent;
+font-family:var(--mono);font-size:9px;font-weight:500;
+letter-spacing:.1em;text-transform:uppercase;
+color:var(--dim);padding:8px 0 7px;
+cursor:pointer;transition:color .12s;
+}
+.t:hover{color:var(--tx)}
+.t.on{color:var(--txb);border-bottom-color:var(--acc)}
+main{
+flex:1;min-height:0;
+display:flex;flex-direction:column;
+padding:8px;gap:6px;
+}
+.tb.h{display:none}
+.bar{display:flex;gap:4px;align-items:center}
+.sep{width:1px;height:16px;background:var(--bd);margin:0 4px}
+.btn{
+appearance:none;
+font-family:var(--mono);font-size:9px;font-weight:500;
+letter-spacing:.12em;text-transform:uppercase;
+color:var(--tx);background:var(--sf);
+border:1px solid var(--bd);border-radius:2px;
+padding:5px 10px;cursor:pointer;
+transition:border-color .12s,color .12s,background .12s;
+}
+.btn:hover{border-color:var(--bd2);color:var(--txb);background:#1f1f28}
+.btn:active{background:#141419}
+.btn.acc{color:var(--acc);border-color:#3d3420}
+.btn.acc:hover{background:#1f1c14;border-color:var(--acc)}
+.btn.rec{color:var(--red);border-color:#3a2220}
+.btn.rec::before{content:'●';margin-right:5px;font-size:6px;vertical-align:1px}
+.btn.rec:hover{background:#1f1414;border-color:var(--red)}
+.btn.rec.on{color:#e8a09a;background:#2a1a18;border-color:var(--red)}
+.btn.rec.on::before{content:'■';font-size:7px}
+#ta{
+flex:1;min-height:0;resize:none;
+font-family:var(--mono);font-variant-ligatures:none;
+font-size:11px;line-height:1.6;
+color:#b0b4c4;background:var(--well);
+border:1px solid var(--bd);border-radius:2px;
+padding:8px 10px;outline:none;
+caret-color:var(--acc);
+transition:border-color .12s;
+scrollbar-width:thin;scrollbar-color:var(--bd) transparent;
+}
+#ta:focus{border-color:var(--bd2)}
+#ta::placeholder{color:var(--dim)}
+#ta::selection{background:rgba(200,168,75,.15)}
+#ta::-webkit-scrollbar{width:6px}
+#ta::-webkit-scrollbar-thumb{background:var(--bd);border-radius:2px}
+.sb{
+display:flex;align-items:center;justify-content:space-between;
+padding:6px 12px;
+border-top:1px solid var(--bd);
+background:var(--sf);
+font-size:9px;letter-spacing:.06em;
+color:var(--dim);
+}
+.sl{display:flex;align-items:center;gap:6px;text-transform:uppercase}
+.sr{color:var(--dim)}
+.dot{
+width:6px;height:6px;border-radius:1px;
+background:var(--dim);
+transition:background .12s;
+}
 .dot.on{background:var(--grn)}
-.dot.rec{background:var(--red);animation:p 1s infinite}
-.h{display:none!important}
-.g{flex:1}
+.dot.rec{background:var(--red);animation:blink 1s steps(1) infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
 </style>
 </head>
 <body>
-<div class="app">
+<header class="hd"><span class="brand">RE·TOOLKIT</span><span class="ver">4.0.0</span></header>
+<nav class="tabs">
+<button class="t on" data-p="rec">rec</button>
+<button class="t" data-p="api">api</button>
+<button class="t" data-p="pw">pw</button>
+<button class="t" data-p="har">har</button>
+<button class="t" data-p="dec">dec</button>
+<button class="t" data-p="map">map</button>
+</nav>
+<main>
+<section class="tb" data-p="rec">
 <div class="bar">
-<div class="t on" data-p="rec">rec</div>
-<div class="t" data-p="api">api</div>
-<div class="t" data-p="pw">pw</div>
+<button id="recBtn" class="btn rec">rec</button>
+<button id="recClr" class="btn">clear</button>
+<span class="sep"></span>
+<button id="recExp" class="btn acc">export</button>
 </div>
-<div class="tb" data-p="rec">
-<button class="btn btn-rec" id="recBtn">rec</button>
-<button class="btn btn-o" id="recClr">clear</button>
-<div class="g"></div>
-<button class="btn btn-g" id="recExp">export</button>
+</section>
+<section class="tb h" data-p="api">
+<div class="bar">
+<button id="apiCap" class="btn acc">capture</button>
+<button id="apiCurl" class="btn">curl</button>
+<button id="apiClr" class="btn">clear</button>
+<span class="sep"></span>
+<button id="apiCpy" class="btn">copy</button>
 </div>
-<div class="tb h" data-p="api">
-<button class="btn btn-b" id="apiCap">capture</button>
-<button class="btn btn-o" id="apiClr">clear</button>
-<div class="g"></div>
-<button class="btn btn-a" id="apiCpy">copy</button>
+</section>
+<section class="tb h" data-p="pw">
+<div class="bar">
+<button id="pwGen" class="btn acc">generate</button>
+<button id="pwClr" class="btn">clear</button>
+<span class="sep"></span>
+<button id="pwCpy" class="btn">copy</button>
 </div>
-<div class="tb h" data-p="pw">
-<button class="btn btn-g" id="pwGen">generate</button>
-<button class="btn btn-o" id="pwClr">clear</button>
-<div class="g"></div>
-<button class="btn btn-a" id="pwCpy">copy</button>
+</section>
+<section class="tb h" data-p="har">
+<div class="bar">
+<button id="harExp" class="btn acc">export</button>
+<button id="harClr" class="btn">clear</button>
+<span class="sep"></span>
+<button id="harCpy" class="btn">copy</button>
 </div>
-<div class="out">
-<textarea class="ta" id="ta" placeholder="// ready" readonly spellcheck="false"></textarea>
+</section>
+<section class="tb h" data-p="dec">
+<div class="bar">
+<button id="decRun" class="btn acc">decode</button>
+<button id="decClr" class="btn">clear</button>
+<span class="sep"></span>
+<button id="decCpy" class="btn">copy</button>
 </div>
-<div class="st">
-<span><span class="dot" id="dot"></span><span id="status">idle</span></span>
-<span id="info"></span>
+</section>
+<section class="tb h" data-p="map">
+<div class="bar">
+<button id="mapBuild" class="btn acc">build</button>
+<button id="mapClr" class="btn">clear</button>
+<span class="sep"></span>
+<button id="mapCpy" class="btn">copy</button>
 </div>
-</div>
+</section>
+<textarea id="ta" spellcheck="false"></textarea>
+</main>
+<footer class="sb">
+<span class="sl"><span id="dot" class="dot"></span><span id="status">idle</span></span>
+<span id="info" class="sr"></span>
+</footer>
 <script src="popup.js"></script>
 </body>
 </html>

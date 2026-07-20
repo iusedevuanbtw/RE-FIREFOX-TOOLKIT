@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
   "name": "RE Toolkit",
-  "version": "2.2.0",
-  "description": "Reverse engineering toolkit",
+  "version": "4.0.0",
+  "description": "Reverse engineering toolkit for web applications",
   "permissions": [
     "webRequest",
     "webRequestBlocking",
@@ -10,19 +10,13 @@
     "storage",
     "clipboardWrite",
     "activeTab",
-    "tabs"
+    "tabs",
+    "downloads"
   ],
   "background": {
-    "scripts": ["background.js"]
+    "scripts": ["background.js"],
+    "persistent": true
   },
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "js": ["recorder.js"],
-      "run_at": "document_end",
-      "all_frames": true
-    }
-  ],
   "browser_action": {
     "default_popup": "popup.html"
   }
